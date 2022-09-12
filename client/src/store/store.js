@@ -3,6 +3,7 @@ import notesSlice from './slices/noteSlice';
 import categorySlice from './slices/categorySlice';
 import addSlice from './slices/addSlice';
 import pageSlice from './slices/paginationSlice';
+import countSlice from './slices/filterSlice';
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         categories: categorySlice.reducer,
         newNotes: addSlice.reducer,
         pagination: pageSlice.reducer,
+        count: countSlice.reducer,
     }
 });
 

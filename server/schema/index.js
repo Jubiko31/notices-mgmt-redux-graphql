@@ -52,9 +52,21 @@ const RootQuery = new GraphQLObjectType({
       args: {
         limit: { type: new GraphQLNonNull(GraphQLString) },
         offset: { type: new GraphQLNonNull(GraphQLString) },
+        fromDate: { type: GraphQLString },
+        toDate: { type: GraphQLString },
       },
       resolve(parent, args) {
-        return Notes.findAll({ limit: args.limit, offset: args.offset });
+        return Notes.findAll(
+          { 
+            limit: args.limit, 
+            offset: args.offset, 
+            where: { 
+              date: { 
+                [Op.between]: [args.fromDate || 0, args.toDate || Infinity], 
+              }, 
+            },
+          }, 
+        );
       },
     },
     totalCount: {

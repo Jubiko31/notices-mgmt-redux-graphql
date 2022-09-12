@@ -17,6 +17,7 @@ import { GET_LIMITED_NOTES } from '../../services/queries/noteQuery'
 import { notesActions } from '../../store/slices/noteSlice';
 import { pageActions } from '../../store/slices/paginationSlice';
 import AddModal from '../Modals/addModal';
+import Filter from '../Filter';
 
 const columns = [
   { id: 'name', label: 'Name', minWidth: 70 },
@@ -29,10 +30,10 @@ const columns = [
 ];
 
 export default function StickyHeadTable() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const page = useSelector((state) => state.pagination.page) || 1;
   const { loading, error, data } = useQuery(GET_LIMITED_NOTES, {
-    variables: { limit: "7", offset:  String((page - 1) * 7)  },
+    variables: { limit: "7", offset:  String((page - 1) * 7) },
   });
   
   const { notes } = useSelector((state) => state.notes)
@@ -45,7 +46,6 @@ export default function StickyHeadTable() {
   const [open, setOpen] = useState(false);
   const [notice, setNotice] = useState(null);
   const [isAdd, setIsAdd] = useState(null);
-  const [noteId, setNoteId] = useState(null);
 
   const handleOpen = (value) => {
     setNotice(value)
@@ -74,6 +74,7 @@ export default function StickyHeadTable() {
         <Button color="success" variant="contained" onClick={handleAddingNewNotice}>
           <AddIcon/> Add New Notice
         </Button>
+        <Filter />
       </Stack>
     </Box>
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -134,7 +135,6 @@ export default function StickyHeadTable() {
         <TablePagination
           rowsPerPageOptions={[5, 15, 50]}
           component="div"
-          count={!loading && notes.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
