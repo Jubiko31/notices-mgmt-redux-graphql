@@ -9,12 +9,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import AddIcon from '@mui/icons-material/Add';
 import { Box, Stack, Button } from '@mui/material';
 import TablePagination from '../Pagination';
 import TransitionsModal from '../Modals/textModal';
 import { GET_LIMITED_NOTES } from '../../services/queries/noteQuery'
 import { notesActions } from '../../store/slices/noteSlice';
 import { pageActions } from '../../store/slices/paginationSlice';
+import AddModal from '../Modals/addModal';
 
 const columns = [
   { id: 'name', label: 'Name', minWidth: 70 },
@@ -42,10 +44,15 @@ export default function StickyHeadTable() {
 
   const [open, setOpen] = useState(false);
   const [notice, setNotice] = useState(null);
+  const [isAdd, setIsAdd] = useState(null);
+  const [noteId, setNoteId] = useState(null);
 
   const handleOpen = (value) => {
     setNotice(value)
     setOpen(true)
+  }
+  const handleAddingNewNotice = () => {
+    setIsAdd(true)
   }
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const handleChangePage = (event, newPage) => {
@@ -59,6 +66,16 @@ export default function StickyHeadTable() {
 
   return (
     <>
+     { isAdd &&
+      <AddModal open={isAdd} setOpen={setIsAdd}/>
+    }
+    <Box component="span" sx={{ display: 'block', m: 5 }}>
+      <Stack direction="row" spacing={2}>
+        <Button color="success" variant="contained" onClick={handleAddingNewNotice}>
+          <AddIcon/> Add New Notice
+        </Button>
+      </Stack>
+    </Box>
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       {open && (
         <TransitionsModal setOpen={setOpen} open={open} notice={notice}/>
