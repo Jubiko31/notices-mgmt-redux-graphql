@@ -46,7 +46,7 @@ const AddModal = ({ open, setOpen }) => {
       categoryId: inputs.categoryId,
       text: inputs.text,
     },
-    refetchQueries: [{ query:  GET_LIMITED_NOTES, variables: { limit: "7", offset: String((page - 1) * 7)}}],
+    refetchQueries: [{ query:  GET_LIMITED_NOTES, variables: { limit: "7", offset: String((page - 1) * 7), fromDate: '', toDate: ''}}],
   })
 
   const handleClose = () => setOpen(false);
