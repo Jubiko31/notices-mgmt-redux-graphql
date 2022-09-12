@@ -43,8 +43,8 @@ const GET_FILTERED_BY_DATE = gql`
 `
 
 const GET_LIMITED_NOTES = gql`
-    query getLimitedNotes($limit: String!, $offset: String!) {
-      notesWithLimit(limit: $limit, offset: $offset) {
+    query getLimitedNotes($limit: String!, $offset: String!, $fromDate: String!, $toDate: String!) {
+      notesWithLimit(limit: $limit, offset: $offset, fromDate: $fromDate, toDate: $toDate) {
           id
           name
           surname
